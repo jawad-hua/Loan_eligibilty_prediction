@@ -22,62 +22,62 @@ scikit-learn – Machine Learning models and utilities
 # Step 2: Load Dataset
 Load the CSV dataset into a pandas DataFrame.
 
-'''
+```
 df = pd.read_csv("loan_prediction_dataset.csv")
-'''
+```
 
 # Step 3: Dataset Overview
 
 Check first few rows, shape, and info:
 
-'''
+```
 df.head()
 df.shape
 df.info()
 df.describe()
-'''
+```
 
 # Step 4: Missing Values Handling
 
 Missing values are handled using mode for categorical and median for numerical columns:
 
-'''
+```
 df['Gender'].fillna(df['Gender'].mode()[0], inplace=True)
 df['LoanAmount'].fillna(df['LoanAmount'].median(), inplace=True)
-'''
+```
 similarly for other columns
  
 # Step 5: Encode Categorical Features
 
 Convert categorical features to numerical using LabelEncoder:
 
-'''
+```
 from sklearn.preprocessing import LabelEncoder
 le = LabelEncoder()
 for col in df.columns:
     if df[col].dtype == 'object':
         df[col] = le.fit_transform(df[col])
-'''
+```
 
 # Step 6: Data Visualization
 
 Loan Status Distribution:
 
-'''
+```
 sns.countplot(x='Loan_Status', data=df)
-'''
+```
 
 # Credit History vs Loan Status:
 
-'''
+```
 sns.countplot(x='Credit_History', hue='Loan_Status', data=df)
-'''
+```
 
 # Applicant Income Distribution:
 
-'''
+```
 plt.hist(df['ApplicantIncome'], bins=30)
-'''
+```
 
 # Step 7: Feature Selection
 
@@ -89,10 +89,10 @@ Loan_Amount_Term, Property_Area, Education, Married
 
 Use StratifiedShuffleSplit to maintain class proportions.
 
-'''
+```
 from sklearn.model_selection import StratifiedShuffleSplit
 split = StratifiedShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
-'''
+```
 
 # Step 9: Machine Learning Models
 Decision Tree
@@ -101,23 +101,23 @@ Simple and interpretable
 
 Accuracy measured on test set
 # Code
-'''
+```
 from sklearn.tree import DecisionTreeClassifier
 dt = DecisionTreeClassifier(max_depth=8, min_samples_split=6, random_state=42)
 dt.fit(X_train, y_train)
 dt_accuracy = accuracy_score(y_test, dt.predict(X_test))
-'''
+```
 
 Random Forest
 
 Ensemble method with higher accuracy and less overfitting
 
-'''
+```
 from sklearn.ensemble import RandomForestClassifier
 rf = RandomForestClassifier(n_estimators=300, max_depth=12, min_samples_split=4, min_samples_leaf=2, random_state=42)
 rf.fit(X_train, y_train)
 rf_accuracy = accuracy_score(y_test, rf.predict(X_test))
-'''
+```
 
 # Step 10: Model Evaluation
 
@@ -133,16 +133,16 @@ Random Forest	89.2	Higher accuracy, less overfitting
 
 Random Forest feature importance visualization:
 
-'''
+```
 plt.barh(features, rf.feature_importances_)
-'''
+```
 
 # Step 12: Correlation Heatmap
 
 Check feature correlation using seaborn heatmap:
-'''
+```
 sns.heatmap(df.corr(), annot=True, cmap='coolwarm', fmt='.2f')
-'''
+```
 
 # Requirements
 pandas==2.1.1
@@ -164,8 +164,8 @@ Place loan_prediction_dataset.csv in the project folder
 
 # Install requirements:
 
-'''
+```
 pip install -r requirements.txt
-'''
+```
 
 Run the notebook to train models and visualize results.
